@@ -15,33 +15,38 @@ import json as simplejson
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
+# from xgboost im
 from sklearn.preprocessing import LabelEncoder
 
 # this method is used for make prediction of user input using ajax call.
+
+
 def makePrediction(request):
     Data = request.POST["dataset"]
     dict_data = simplejson.loads(Data)
 
     prepare_dataset = Pollution.objects.values('City', 'Pm2', 'Pm10', 'No', 'No2', 'Nox', 'Nh3', 'Co', 'So2',
-       'O3', 'Benzene', 'Toluene', 'Xylene', 'Aqi', 'Air_quality')
+                                               'O3', 'Benzene', 'Toluene', 'Xylene', 'Aqi', 'Air_quality')
     dataset = pd.DataFrame(prepare_dataset)
-    le=LabelEncoder()
-    dataset['City']=le.fit_transform(dataset['City'].astype(str))
-    dataset['Air_quality']=le.fit_transform(dataset['Air_quality'].astype(str))
+    le = LabelEncoder()
+    dataset['City'] = le.fit_transform(dataset['City'].astype(str))
+    dataset['Air_quality'] = le.fit_transform(
+        dataset['Air_quality'].astype(str))
     y = dataset["Air_quality"]
-    x = dataset[['City','Pm2', 'Pm10', 'No', 'No2', 'Nox', 'Nh3', 'Co', 'So2',
-       'O3', 'Benzene', 'Toluene', 'Xylene', 'Aqi']]
-    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state = 0)
-    #prediction started
-    gbc=XGBClassifier(learning_rate =0.01,n_estimators=100,max_depth=1,
-                  min_child_weight=6,subsample=0.8,seed=13)
-    gbc.fit(X_train,y_train)
+    x = dataset[['City', 'Pm2', 'Pm10', 'No', 'No2', 'Nox', 'Nh3', 'Co', 'So2',
+                 'O3', 'Benzene', 'Toluene', 'Xylene', 'Aqi']]
+    X_train, X_test, y_train, y_test = train_test_split(
+        x, y, test_size=0.3, random_state=0)
+    # prediction started
+    gbc = XGBClassifier(learning_rate=0.01, n_estimators=100, max_depth=1,
+                        min_child_weight=6, subsample=0.8, seed=13)
+    gbc.fit(X_train, y_train)
     pred = gbc.predict(X_test)
-    final_test = pd.DataFrame({"City": dict_data["cityName"],"Pm2":[float(dict_data['Pm2'])], "Pm10":[float(dict_data['Pm10'])], "No":[float(dict_data["No"])], "No2":[float(dict_data["No2"])], "Nox":[float(dict_data["Nox"])], "Nh3":[float(dict_data["Nh3"])], "Co":[float(dict_data["Co"])], "So2":[float(dict_data["So2"])],
-    "O3":[float(dict_data["O3"])], "Benzene":[float(dict_data["Benzene"])], "Toluene":[float(dict_data["Toluene"])], "Xylene":[float(dict_data["Xylene"])], "Aqi":[float(dict_data["Aqi"])]})
-    
+    final_test = pd.DataFrame({"City": dict_data["cityName"], "Pm2": [float(dict_data['Pm2'])], "Pm10": [float(dict_data['Pm10'])], "No": [float(dict_data["No"])], "No2": [float(dict_data["No2"])], "Nox": [float(dict_data["Nox"])], "Nh3": [float(dict_data["Nh3"])], "Co": [float(dict_data["Co"])], "So2": [float(dict_data["So2"])],
+                               "O3": [float(dict_data["O3"])], "Benzene": [float(dict_data["Benzene"])], "Toluene": [float(dict_data["Toluene"])], "Xylene": [float(dict_data["Xylene"])], "Aqi": [float(dict_data["Aqi"])]})
+
     final_output = gbc.predict(final_test)
-    data = {"Output": final_output[0],"Input":dict_data}
+    data = {"Output": final_output[0], "Input": dict_data}
     return JsonResponse({"data": data})
     # nameSate = dict_data["stateinput"]
     # print(nameSate)
@@ -60,7 +65,6 @@ def makePrediction(request):
     # data = {"final_output":final_output[0][0],"mean_square_error" : metrics.mean_squared_error(Y_test, y2_pred), "root_mean_square_error" : np.sqrt(metrics.mean_squared_error(Y_test, y2_pred))}*/
 
 
-
 # Home
 
 
@@ -68,10 +72,10 @@ def home(request):
     posts = State.objects.all()
     pol = Pollution.objects.all()
     city_names = ['Ahmedabad', 'Aizawl', 'Amaravati', 'Amritsar', 'Bengaluru', 'Bhopal',
-        'Brajrajnagar', 'Chandigarh', 'Chennai', 'Coimbatore', 'Delhi', 'Ernakulam',
-        'Gurugram', 'Guwahati', 'Hyderabad', 'Jaipur', 'Jorapokhar', 'Kochi', 'Kolkata',
-        'Lucknow', 'Mumbai', 'Patna', 'Shillong', 'Talcher', 'Thiruvananthapuram',
-        'Visakhapatnam']
+                  'Brajrajnagar', 'Chandigarh', 'Chennai', 'Coimbatore', 'Delhi', 'Ernakulam',
+                  'Gurugram', 'Guwahati', 'Hyderabad', 'Jaipur', 'Jorapokhar', 'Kochi', 'Kolkata',
+                  'Lucknow', 'Mumbai', 'Patna', 'Shillong', 'Talcher', 'Thiruvananthapuram',
+                  'Visakhapatnam']
 
     context = {
         'posts': posts,
