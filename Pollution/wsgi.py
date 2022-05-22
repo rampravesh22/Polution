@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Rainfall.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Pollution.settings')
 
 application = get_wsgi_application()

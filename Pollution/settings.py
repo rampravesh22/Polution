@@ -53,7 +53,7 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
-ROOT_URLCONF = 'Rainfall.urls'
+ROOT_URLCONF = 'Pollution.urls'
 
 TEMPLATES = [
     {
@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Rainfall.wsgi.application'
+WSGI_APPLICATION = 'Pollution.wsgi.application'
 
 
 # Database
