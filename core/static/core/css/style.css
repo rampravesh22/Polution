@@ -46,7 +46,7 @@ body {
    line-height: 1.8em;
 }
 .form-control{
-   border-radius: 0;
+   border-radius: 1;
    border: 1px solid rgb(183, 183, 191);
 
 }
@@ -123,9 +123,13 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0; 
 }
 @media  (max-width:768px) {
-   
+
    .input-content .col-md-2{
       width: 40%;
    }
    
 }
+.dropdown-menu {         
+   max-height: 400px;
+   overflow-y: auto;
+ }

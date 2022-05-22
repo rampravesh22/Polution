@@ -10,8 +10,8 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Vehicular Pollution
                 </button>
-                <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
-                    {% for p in pol %} <li><a class="dropdown-item text-uppercase" href="#">{{p}}</a></li>{% endfor %}
+                <ul class="dropdown-menu w-100 scrollable-menu" aria-labelledby="dropdownMenuButton1">
+                    {% for p in city_names %} <li><a class="dropdown-item text-uppercase" href="#">{{p}}</a></li>{% endfor %}
                 </ul>
             </div>
         </div>
@@ -22,18 +22,17 @@
                     Industrial Pollution
                 </button>
                 <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
-                    {% for p in pol %} <li><a class="dropdown-item text-uppercase" href="#">{{p}}</a></li>{% endfor %}
+                    {% for p in city_names %} <li><a class="dropdown-item text-uppercase" href="#">{{p}}</a></li>{% endfor %}
                 </ul>
             </div>
         </div>
     </div>
     <div class="row input-content mt-5">
         <h2 class="text-capitalize text-center my-4">Air Pollution Prediction</h2>
-        <form method="post">
+        <form method="post d-flex">
             <div class="row  d-flex justify-content-center">
-
-                <div class="col-md-2 mt-3 col-lg-"><input type="number" class="form-control w-100" id="exampleInputEmail1"
-                        aria-describedby="numHelp" placeholder="PO2.5"></div>
+                <div class="col-md-2 mt-3 col-lg-"><input type="number" class="form-control w-100"
+                        id="exampleInputEmail1" aria-describedby="numHelp" placeholder="PO2.5"></div>
                 <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
                         aria-describedby="numHelp" placeholder="PM10"></div>
                 <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
@@ -44,7 +43,7 @@
                         aria-describedby="numHelp" placeholder="NOx"></div>
                 <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
                         aria-describedby="numHelp" placeholder="CO"></div>
-             
+
             </div>
             <div class="row d-flex justify-content-center">
                 <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
@@ -60,12 +59,12 @@
                 <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
                         aria-describedby="numHelp" placeholder="AQI"></div>
             </div>
+            <center><button class="btn btn-primary mt-5 m-auto">Submit</button></center>
         </form>
     </div>
+  
 </div>
 
-
-</div>
 
 
 <div>

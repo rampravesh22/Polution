@@ -3,26 +3,24 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from core.forms import SignUpForm, LoginForm, AddState
 from django.contrib import messages
-<<<<<<< HEAD
-from core.models import State,Pollution
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import Group
-=======
 from core.models import State, Pollution
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 import pandas as pd
->>>>>>> 7eac737bc5ede6664e44b5b51255883be2cb3668
 
 # Home
+
+
 def home(request):
     posts = State.objects.all()
-    pol=Pollution.objects.all()
-    l=['id', "City", 'Date', 'Pm2.0','Pm10','No','No2','Nox','Nh3','Co','So2','O3','Benzene','Toluene','Xylene','Aqi','Air quality']
+    pol = Pollution.objects.all()
+    city_names = ['AHMEDABAD', 'HYDERABAD', 'PATNA', 'DELHI', 'SHILLONG', 'TALCHER', 'CHANDIGARH', 'BENGALURU', 'MUMBAI', 'AMRITSAR', 'COIMBATORE', 'ERNAKULAM', 'LUCKNOW',
+                  'VISAKHAPATNAM', 'AIZAWL', 'BHOPAL', 'THIRUVANANTHAPURAM', 'AMARAVATI', 'JORAPOKHAR', 'BRAJRAJNAGAR', 'KOCHI', 'GURUGRAM', 'CHENNAI', 'KOLKATA', 'JAIPUR', 'GUWAHATI']
+
     context = {
         'posts': posts,
         "home": "current",
-        'pol':l
+        'city_names': city_names
     }
     return render(request, 'core/home.html', context)
 
@@ -193,6 +191,6 @@ def detailsPost(request, id):
 # arr = df1.to_numpy()
 # list_arr = arr.tolist()
 # for row in list_arr:
-#     c = Pollution(City=row[0].upper(), Date=row[1], Pm2=row[2], Pm10=row[3], No=row[4], No2=row[5], Nox=row[6], 
+#     c = Pollution(City=row[0].upper(), Date=row[1], Pm2=row[2], Pm10=row[3], No=row[4], No2=row[5], Nox=row[6],
 #     Nh3=row[7], Co=row[8], So2=row[9], O3=row[10], Benzene=row[11], Toluene=row[12], Xylene=row[13], Aqi=row[14], Air_quality=row[15])
 #     c.save()
