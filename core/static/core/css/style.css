@@ -1,0 +1,113 @@
+body {
+   /* background: linear-gradient(90deg, red,yellow); */
+   background-repeat: repeat;
+   background-size: cover;
+   color: rgb(23, 21, 19);
+   font-family: poppins;
+   /* box-sizing: border-box; */
+
+}
+.btn-margin{
+   margin-left:2vw ;
+}
+.img-slide {
+   height: 22rem;
+   margin: auto;
+   overflow: hidden;
+   object-fit: cover;
+}
+
+.state-img {
+   height: 17rem;
+   max-width: 100%;
+   overflow: hidden;
+}
+.footer-heading {
+   background-color: rgb(75, 75, 75);
+   color: rgb(230, 230, 244) !important;
+   font-weight: 600;
+}
+
+.card-text {
+   display: block;
+   overflow: hidden;
+   word-wrap: break-word;
+   overflow: hidden;
+   max-height: 9em;
+   line-height: 1.8em;
+   text-overflow: ellipsis;
+}
+.max-lines {
+   display: block; /* or inline-block */
+   text-overflow: ellipsis;
+   word-wrap: break-word;
+   overflow: hidden;
+   max-height: 3.6em;
+   line-height: 1.8em;
+}
+.form-control{
+   border-radius: 0;
+   border: 1px solid rgb(183, 183, 191);
+
+}
+
+.form-control:focus {
+   /* background-color: aliceblue; */
+   outline: none;
+   box-shadow: none;
+   border-radius: 0;
+   border:black 1px solid
+}
+
+div .desc {
+   max-width: 100px;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+@media screen and (min-width: 992px) {
+   .col-space {
+      box-sizing: border-box;
+      margin-right: 3rem;
+      position: relative;
+      left: 7%;
+   }
+}
+@media screen and (min-width: 1000px) {
+}
+
+.col-space {
+   position: relative;
+}
+.view-btn {
+   margin-left: 40%;
+   position: absolute;
+   bottom: 0;
+   margin-bottom: 0.5rem;
+}
+
+.post-desc {
+   max-height: 29rem;
+   white-space: pre-wrap;
+   overflow: hidden;
+   /* text-overflow: unset; */
+}
+
+.title-color {
+   font-weight: 600;
+   letter-spacing: 0.2rem;
+   color: rgb(20, 21, 20) !important;
+   background-color: rgb(241, 243, 252);
+   padding: 1.5rem;
+   border-radius: 0.2rem;
+   box-shadow: 0 0 5px 1px rgb(61, 59, 59);
+}
+
+nav .container-fluid .current {
+   color: rgb(26, 79, 97) !important;
+   /* padding: 0.5rem 0.5rem; */
+}
+
+.form-signin{
+   width: clamp(400px,60%,600px);
+}

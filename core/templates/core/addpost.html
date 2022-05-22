@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<div class='col-sm-10'>
+    <h3 class="text-white my-5">Dashboard/Add Post</h3>
+    {% if messages %}
+    {% for message in messages  %}
+    <div {% if message.tags %} class="alert alert-{{message.tags}} alert-dismissible fade show" {% endif %}
+        role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <form action="" method="post" novalidate enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for fm in form %}
+        <div class=" mb-3">
+            <label for="{{fm.auto_id}}" class=" text-white form-label"> {{fm.label_tag|striptags}}</label>
+            {{fm}}
+            <small class="text-warning">{{fm.errors|striptags}}</small>
+        </div>
+        {% endfor %}
+        <input type="submit" value="Add" class="btn btn-success">
+        <a href="{% url 'dashboard' %}" class="btn btn-danger">Back</a>
+    </form>
+</div>
+{% endblock content %}

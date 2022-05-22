@@ -1,0 +1,8 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid py-3 bg-white p-4 mb-4 bg-light rounded-3 container">
+    <h1 class="text-capitalize display-5 fw-bold">{{post.title}}</h1>
+    <p class="col-md-8 fs-4">{{post.desc}}.</p>
+</div>
+{% endblock content %}
