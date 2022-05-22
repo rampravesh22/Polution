@@ -129,6 +129,16 @@ input[type=number]::-webkit-outer-spin-button {
    }
    
 }
+@media  (min-width:769px) {
+
+   .input-content .col-md-2{
+      width: clamp(200px,40%,400px)
+   }
+   .input-content{
+      max-width: clamp(600px,80%,1200px);
+   }
+   
+}
 .dropdown-menu {         
    max-height: 400px;
    overflow-y: auto;

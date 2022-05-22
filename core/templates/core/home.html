@@ -5,34 +5,40 @@
 <div class="container main-home mt-5">
     <div class="row d-flex justify-content-center btn-row">
         <div class="col-md-5 mb-2 d-flex justify-content-center">
-            <div class="dropdown">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Vehicular Pollution
-                </button>
-                <ul class="dropdown-menu w-100 scrollable-menu" aria-labelledby="dropdownMenuButton1">
-                    {% for p in city_names %} <li><a class="dropdown-item text-uppercase" href="#">{{p}}</a></li>{% endfor %}
-                </ul>
-            </div>
+            <button class="btn btn-outline-secondary" type="button">
+                Vehicular Pollution
+            </button>
         </div>
         <div class="col-md-5 d-flex justify-content-center">
-            <div class="dropdown">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Industrial Pollution
-                </button>
-                <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
-                    {% for p in city_names %} <li><a class="dropdown-item text-uppercase" href="#">{{p}}</a></li>{% endfor %}
-                </ul>
-            </div>
+            <button class="btn btn-outline-secondary" type="button">
+                Industrial Pollution
+            </button>
+
         </div>
     </div>
-    <div class="row input-content mt-5">
+    <div class="row input-content mt-5 m-auto">
         <h2 class="text-capitalize text-center my-4">Air Pollution Prediction</h2>
-        <form id="predictedData">
-            <div class="row  d-flex justify-content-center">
+
+        <center>
+            <div class="dropdown mb-5">
+                <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Select City
+                </button>
+                <ul class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton1">
+                    {% for city in city_names %}
+                    <li><a class="dropdown-item" onclick="select({{forloop.counter0}})">{{city}}</a></li>
+                    {% endfor %}
+            
+                </ul>
+            </div>
+        </center>
+
+        <form method="post" id="predictedData">
+            {% csrf_token %}
+            <div class="row  d-flex justify-content-center row-form">
                 <div class="col-md-2 mt-3 col-lg-"><input type="number" class="form-control w-100"
-                        id="exampleInputEmail1" aria-describedby="numHelp" placeholder="PO2.5"></div>
+                     aria-describedby="numHelp" placeholder="PO2.5"></div>
                 <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
                         aria-describedby="numHelp" placeholder="PM10"></div>
                 <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
@@ -40,12 +46,15 @@
                 <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
                         aria-describedby="numHelp" placeholder="NO2"></div>
                 <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
-                        aria-describedby="numHelp" placeholder="NOx"></div>
+                        aria-describedby="numHelp" placeholder="NOX"></div>
+                <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
+                        aria-describedby="numHelp" placeholder="NH3"></div>
                 <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
                         aria-describedby="numHelp" placeholder="CO"></div>
 
-            </div>
-            <div class="row d-flex justify-content-center">
+                {% comment %}
+            </div> {% endcomment %}
+            {% comment %} <div class="row d-flex justify-content-center"> {% endcomment %}
                 <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
                         aria-describedby="numHelp" placeholder="SO2"></div>
                 <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
@@ -62,25 +71,37 @@
             <center><button class="btn btn-primary mt-5 m-auto" type="button" onClick="fetchData()">Submit</button></center>
         </form>
     </div>
-  
+
 </div>
 
 <script>
+cityName = "";
+const select = (num)=>{
+    cityList = {{city_names | safe}};
+    cityName = num;
+    console.log("cityName:-",cityList[num]);
+}
 const fetchData = () =>{
+    debugger;
     const formData = document.getElementById('predictedData');
-    const PM2 = formData.elements[0].value;
-    const PM10 = formData.elements[1].value;
-    const NO = formData.elements[2].value;
-    const NO2 = formData.elements[3].value;
-    const NOx = formData.elements[4].value;
-    const CO = formData.elements[5].value;
-    const SO2 = formData.elements[6].value;
-    const O3 = formData.elements[7].value;
-    const BENZENE = formData.elements[8].value;
-    const TOLUENE = formData.elements[9].value;
-    const XYLENE = formData.elements[10].value;
-    const AQI = formData.elements[11].value;
-    data = {PM2,PM10,NO,NO2,NOx,CO,SO2,O3,BENZENE,TOLUENE,XYLENE,AQI}
+    if(cityName===""){
+        alert("Please provide Area");
+    }else{
+    console.log("elements:-",formData.elements)
+    const Pm2 = formData.elements[1].value;
+    const Pm10 = formData.elements[2].value;
+    const No = formData.elements[3].value;
+    const No2 = formData.elements[4].value;
+    const Nox = formData.elements[5].value;
+    const Nh3 = formData.elements[6].value;
+    const Co = formData.elements[7].value;
+    const So2 = formData.elements[8].value;
+    const O3 = formData.elements[9].value;
+    const Benzene = formData.elements[10].value;
+    const Toluene = formData.elements[11].value;
+    const Xylene = formData.elements[12].value;
+    const Aqi = formData.elements[13].value;
+    data = {cityName,Pm2,Pm10,No,No2,Nox,Nh3,Co,So2,O3,Benzene,Toluene,Xylene,Aqi}
     console.log("data:-",data);
      $.ajax({
             url : "/make-prediction", // the endpoint
@@ -113,6 +134,8 @@ const fetchData = () =>{
                 
             },
         });
+    }
+    
 }
 </script>
 
