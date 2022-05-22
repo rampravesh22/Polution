@@ -55,7 +55,7 @@ body {
    /* background-color: aliceblue; */
    outline: none;
    box-shadow: none;
-   border-radius: 0;
+   /* border-radius: 0; */
    border:black 1px solid
 }
 
@@ -108,8 +108,14 @@ nav .container-fluid .current {
    /* padding: 0.5rem 0.5rem; */
 }
 
+
 .form-signin{
    width: clamp(400px,60%,600px);
+   border-radius: 10px;
+   padding-left: 40px;
+   padding-right: 40px;
+   padding-bottom: 50px;
+   box-shadow: 0 0 10px 3px rgb(189, 187, 187);
 }
 
 .main-home{
@@ -142,4 +148,9 @@ input[type=number]::-webkit-outer-spin-button {
 .dropdown-menu {         
    max-height: 400px;
    overflow-y: auto;
+ }
+
+ .pollution-col{
+    width: clamp(450px,70%,900px);
+    margin: auto;
  }

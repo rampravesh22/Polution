@@ -4,6 +4,67 @@
 {% block content %}
 <div class="container main-home mt-5">
     <div class="row d-flex justify-content-center btn-row">
+        <div class="col-xl-5">
+            <center>
+                <p>
+                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseWidthExample1" aria-expanded="false"
+                        aria-controls="collapseWidthExample1">
+                        Vehicular Pollution
+                    </button>
+                </p>
+            </center>
+            <div style="min-height: 10px;" class="pollution-col">
+                <div class="collapse collapse-vertival mb-4" id="collapseWidthExample1">
+                    <div class="card card-body">
+                        This is some placeholder content for a horizontal collapse. It's hidden by default and shown
+                        when
+                        triggered.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti exercitationem nostrum
+                        laudantium autem itaque explicabo inventore, aut, expedita debitis, corporis dolorum architecto
+                        modi voluptate a reiciendis? Rerum illum ipsum quis, ipsam, voluptates consequatur nostrum
+                        
+                        
+                            <img src="{% static 'core/img/vehicular.png' %}" class="card-img-top  border border-secondary mt-3" alt="...">
+                            <p class="text-center mt-2">Vehicular Pollution Graph</p>
+                          
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xl-5">
+            <center>
+                <p>
+                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseWidthExample2" aria-expanded="false"
+                        aria-controls="collapseWidthExample1">
+                        Industrial Pollution
+                    </button>
+                </p>
+            </center>
+            <div style="min-height: 10px;" class="pollution-col">
+                <div class="collapse collapse-vertical mb-4" id="collapseWidthExample2">
+                    <div class="card card-body">
+                        This is some placeholder content for a horizontal collapse. It's hidden by default and shown
+                        when
+                        triggered.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti exercitationem nostrum
+                        laudantium autem itaque explicabo inventore, aut, expedita debitis, corporis dolorum architecto
+                        modi voluptate a reiciendis? Rerum illum ipsum quis, ipsam, voluptates consequatur nostrum
+                       
+                            <img src="{% static 'core/img/industrial.png' %}" class="card-img-top mt-3 border border-secondary" alt="...">
+                            <p class="text-center mt-2">Industrial Pollution Graph</p>
+                      
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    {% comment %} <div class="row d-flex justify-content-center btn-row">
         <div class="col-md-5 mb-2 d-flex justify-content-center">
             <button class="btn btn-outline-secondary" type="button">
                 Vehicular Pollution
@@ -15,13 +76,14 @@
             </button>
 
         </div>
-    </div>
+    </div> {% endcomment %}
     <div class="row input-content mt-5 m-auto">
-        <h2 class="text-capitalize text-center my-4">Air Pollution Prediction</h2>
+        <h2 class="text-capitalize text-center my-4" id="h21">Air Pollution Prediction</h2>
 
         <center>
+
             <div class="dropdown mb-5">
-                <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton1"
+                <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="select-city"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Select City
                 </button>
@@ -29,10 +91,8 @@
                     {% for city in city_names %}
                     <li><a class="dropdown-item" onclick="select({{forloop.counter0}})">{{city}}</a></li>
                     {% endfor %}
-            
                 </ul>
             </div>
-        </center>
 
         <form method="post" id="predictedData">
             {% csrf_token %}

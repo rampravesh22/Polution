@@ -142,28 +142,27 @@ def user_signup(request):
 # Login
 def user_login(request):
     # if not request.user.is_authenticated :: means user is not logged in so the else part will be executed
-    if not request.user.is_authenticated:
-        if request.method == "POST":
+    if request.method == "POST":
 
-            form = LoginForm(request=request, data=request.POST)
-            if form.is_valid():
-                uname = form.cleaned_data['username']
-                upass = form.cleaned_data['password']
-                user = authenticate(username=uname, password=upass)
-                if user is not None:
-                    login(request, user)
-                    messages.success(request, "Logged in Successfuly")
-                    return redirect("/")
-        else:
-            form = LoginForm()
-        context = {
-            'form': form,
-            "login": "current"
-        }
-        return render(request, 'core/login.html', context)
+        form = LoginForm(request=request, data=request.POST)
+        if form.is_valid():
+            uname = form.cleaned_data['username']
+            upass = form.cleaned_data['password']
+            user = authenticate(username=uname, password=upass)
+            if user is not None:
+                login(request, user)
+                messages.success(request, "Logged in Successfuly")
+                return redirect("/home")
     else:
-        # this will execute when the user is already logged in
-        return redirect('/')
+        form = LoginForm()
+    context = {
+        'form': form,
+        "login": "current"
+    }
+    return render(request, 'core/login.html', context)
+    # else:
+    #     # this will execute when the user is already logged in
+    #     return render(request,'core/login.html')
 
 
 # add new post
