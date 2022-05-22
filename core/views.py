@@ -8,6 +8,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 import pandas as pd
 
+
+def makePrediction(request):
+    a=20
 # Home
 
 

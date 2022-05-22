@@ -29,7 +29,7 @@
     </div>
     <div class="row input-content mt-5">
         <h2 class="text-capitalize text-center my-4">Air Pollution Prediction</h2>
-        <form method="post d-flex">
+        <form id="predictedData">
             <div class="row  d-flex justify-content-center">
                 <div class="col-md-2 mt-3 col-lg-"><input type="number" class="form-control w-100"
                         id="exampleInputEmail1" aria-describedby="numHelp" placeholder="PO2.5"></div>
@@ -59,13 +59,62 @@
                 <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
                         aria-describedby="numHelp" placeholder="AQI"></div>
             </div>
-            <center><button class="btn btn-primary mt-5 m-auto">Submit</button></center>
+            <center><button class="btn btn-primary mt-5 m-auto" type="button" onClick="fetchData()">Submit</button></center>
         </form>
     </div>
   
 </div>
 
-
+<script>
+const fetchData = () =>{
+    const formData = document.getElementById('predictedData');
+    const PM2 = formData.elements[0].value;
+    const PM10 = formData.elements[1].value;
+    const NO = formData.elements[2].value;
+    const NO2 = formData.elements[3].value;
+    const NOx = formData.elements[4].value;
+    const CO = formData.elements[5].value;
+    const SO2 = formData.elements[6].value;
+    const O3 = formData.elements[7].value;
+    const BENZENE = formData.elements[8].value;
+    const TOLUENE = formData.elements[9].value;
+    const XYLENE = formData.elements[10].value;
+    const AQI = formData.elements[11].value;
+    data = {PM2,PM10,NO,NO2,NOx,CO,SO2,O3,BENZENE,TOLUENE,XYLENE,AQI}
+    console.log("data:-",data);
+     $.ajax({
+            url : "/make-prediction", // the endpoint
+            type : "POST", // http method
+            data : { 'dataset' : JSON.stringify(data), 'csrfmiddlewaretoken': '{{csrf_token}}'}, // data sent with the post request
+    
+            // handle a successful response
+            success : function(json) {
+                console.log("successfull call:-",json);
+                //console.log(json); // log the returned json to the console
+                //console.log("success"); // another sanity check
+               /* data = [];
+                data.push(stateinput);
+                data.push(Number(jan_feb));
+                data.push(Number(mar_may));
+                data.push(Number(jun_sep));
+                data.push(Number(oct_dec));
+                data.push(json.data.final_output);
+                //console.log("data:-",data);
+                dataset.push(data);
+                if(grid==""){
+                    document.getElementById("resultHeading").style.display = "block";
+                    grid = table(dataset,["Region","Jan-Feb","Mar-May","Jun-Sep","Oct-Dec","Annual"],"wrapperOutputTable");
+                }
+                else{
+                    grid.updateConfig({
+                            data: dataset
+                        }).forceRender();
+                }*/
+                
+            },
+        });
+}
+</script>
 
 <div>
     {% include 'core/footer.html' %}
