@@ -1,10 +1,18 @@
+import os
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from core.forms import SignUpForm, LoginForm, AddState
 from django.contrib import messages
+<<<<<<< HEAD
 from core.models import State,Pollution
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
+=======
+from core.models import State, Pollution
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import Group
+import pandas as pd
+>>>>>>> 7eac737bc5ede6664e44b5b51255883be2cb3668
 
 # Home
 def home(request):
@@ -164,3 +172,27 @@ def detailsPost(request, id):
     if request.user.is_authenticated:
         pi = State.objects.get(pk=id)
         return render(request, "core/detail_post.html", {"post": pi})
+
+# os.chdir("C:\\Users\\AQIB\\Downloads\\ML")
+# df = pd.read_csv("city_day.csv")
+# df1 = df.copy()
+# df1['PM2.5']=df1['PM2.5'].fillna((df1['PM2.5'].median()))
+# df1['PM10']=df1['PM10'].fillna((df1['PM10'].median()))
+# df1['NO']=df1['NO'].fillna((df1['NO'].median()))
+# df1['NO2']=df1['NO2'].fillna((df1['NO2'].median()))
+# df1['NOx']=df1['NOx'].fillna((df1['NOx'].median()))
+# df1['NH3']=df1['NH3'].fillna((df1['NH3'].median()))
+# df1['CO']=df1['CO'].fillna((df1['CO'].median()))
+# df1['SO2']=df1['SO2'].fillna((df1['SO2'].median()))
+# df1['O3']=df1['O3'].fillna((df1['O3'].median()))
+# df1['Benzene']=df1['Benzene'].fillna((df1['Benzene'].median()))
+# df1['Toluene']=df1['Toluene'].fillna((df1['Toluene'].median()))
+# df1['Xylene']=df1['Xylene'].fillna((df1['Xylene'].median()))
+# df1['AQI']=df1['AQI'].fillna((df1['AQI'].median()))
+# df1['AQI_Bucket']=df1['AQI_Bucket'].fillna('Moderate')
+# arr = df1.to_numpy()
+# list_arr = arr.tolist()
+# for row in list_arr:
+#     c = Pollution(City=row[0].upper(), Date=row[1], Pm2=row[2], Pm10=row[3], No=row[4], No2=row[5], Nox=row[6], 
+#     Nh3=row[7], Co=row[8], So2=row[9], O3=row[10], Benzene=row[11], Toluene=row[12], Xylene=row[13], Aqi=row[14], Air_quality=row[15])
+#     c.save()
