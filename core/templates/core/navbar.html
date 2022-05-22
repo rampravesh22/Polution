@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-white py-3 shadow">
     <div class=" container-fluid justify-content-between">
-        <a class="navbar-brand p-2 title-color" href="/">Air Polution</a>
+        <a class="navbar-brand p-2 title-color" href="/">Air Pollution</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,9 +24,9 @@
                 {% if request.user.is_authenticated %}
                 {% comment %} the upper if condition show that if the user is logged in then the follwing code will we
                 executed inside if condtions{% endcomment %}
-                <li class="nav-item">
+                {% comment %} <li class="nav-item">
                     <a class="nav-link {{dashboard}} " href="{% url 'dashboard' %}">Dashboard</a>
-                </li>
+                </li> {% endcomment %}
 
                 <li class="nav-item">
                     <a class="nav-link " href="{% url 'logout' %}">Logout</a>
