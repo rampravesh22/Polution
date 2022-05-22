@@ -2,17 +2,19 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from core.forms import SignUpForm, LoginForm, AddState
 from django.contrib import messages
-from core.models import State
+from core.models import State,Pollution
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
-
 
 # Home
 def home(request):
     posts = State.objects.all()
+    pol=Pollution.objects.all()
+    l=['id', "City", 'Date', 'Pm2.0','Pm10','No','No2','Nox','Nh3','Co','So2','O3','Benzene','Toluene','Xylene','Aqi','Air quality']
     context = {
         'posts': posts,
-        "home": "current"
+        "home": "current",
+        'pol':l
     }
     return render(request, 'core/home.html', context)
 

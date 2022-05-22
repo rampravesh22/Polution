@@ -2,17 +2,71 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-5 shadow">
-            <h3>Vehicular Polution</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente nesciunt dolorum magni aspernatur. Sunt, iste! Ducimus ipsa esse incidunt! Harum in dolores obcaecati! Nemo at quas eligendi facere facilis alias aspernatur nihil a sint eos suscipit vitae, pariatur nam officiis reiciendis quidem assumenda consectetur ipsam eveniet. Ipsum unde voluptatum, necessitatibus quos provident voluptatibus est! Odit totam minima ipsum consequatur aspernatur fuga nihil, accusamus veniam, animi perspiciatis iure ullam eos tempora!</p>
-
+<div class="container main-home mt-5">
+    <div class="row d-flex justify-content-center btn-row">
+        <div class="col-md-5 mb-2 d-flex justify-content-center">
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Vehicular Pollution
+                </button>
+                <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
+                    {% for p in pol %} <li><a class="dropdown-item text-uppercase" href="#">{{p}}</a></li>{% endfor %}
+                </ul>
+            </div>
         </div>
-        <div class="col-md-5"></div>
+        <div class="col-md-5 d-flex justify-content-center">
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Industrial Pollution
+                </button>
+                <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
+                    {% for p in pol %} <li><a class="dropdown-item text-uppercase" href="#">{{p}}</a></li>{% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
+    <div class="row input-content mt-5">
+        <h2 class="text-capitalize text-center my-4">Air Pollution Prediction</h2>
+        <form method="post">
+            <div class="row  d-flex justify-content-center">
+
+                <div class="col-md-2 mt-3 col-lg-"><input type="number" class="form-control w-100" id="exampleInputEmail1"
+                        aria-describedby="numHelp" placeholder="PO2.5"></div>
+                <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
+                        aria-describedby="numHelp" placeholder="PM10"></div>
+                <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
+                        aria-describedby="numHelp" placeholder="NO"></div>
+                <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
+                        aria-describedby="numHelp" placeholder="NO2"></div>
+                <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
+                        aria-describedby="numHelp" placeholder="NOx"></div>
+                <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
+                        aria-describedby="numHelp" placeholder="CO"></div>
+             
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
+                        aria-describedby="numHelp" placeholder="SO2"></div>
+                <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
+                        aria-describedby="numHelp" placeholder="O3"></div>
+                <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
+                        aria-describedby="numHelp" placeholder="BENZENE"></div>
+                <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
+                        aria-describedby="numHelp" placeholder="TOLUENE"></div>
+                <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
+                        aria-describedby="numHelp" placeholder="XYLENE"></div>
+                <div class="col-md-2 mt-3"><input type="number" class="form-control w-100" id="exampleInputEmail1"
+                        aria-describedby="numHelp" placeholder="AQI"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 </div>
+
 
 <div>
     {% include 'core/footer.html' %}

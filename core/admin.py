@@ -3,9 +3,6 @@ from core.models import State,Pollution
 from django.contrib import admin
 # from django.contrib.auth.admin import UserAdmin
 
-# Register your models here.
-# admin.site.register(UserAdmin)
-
 
 # @admin.register(State)
 # class StateModelAdmin(admin.ModelAdmin):
