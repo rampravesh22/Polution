@@ -12,8 +12,5 @@ for (let button of seletCity) {
         console.log(this.textContent);
         const a = document.getElementById('select-city');
         a.textContent=this.textContent
-        
-
-        
     });
 }

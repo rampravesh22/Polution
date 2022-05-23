@@ -89,7 +89,7 @@
                 </button>
                 <ul class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton1">
                     {% for city in city_names %}
-                    <li><a class="dropdown-item" onclick="select({{forloop.counter0}})">{{city}}</a></li>
+                    <li><button class="dropdown-item" id="select-btn" onclick="select({{forloop.counter0}})">{{city}}</button></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -142,7 +142,6 @@ const select = (num)=>{
     console.log("cityName:-",cityList[num]);
 }
 const fetchData = () =>{
-    debugger;
     const formData = document.getElementById('predictedData');
     if(cityName===""){
         alert("Please provide Area");

@@ -1,7 +1,7 @@
 import os
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
-from core.forms import SignUpForm, LoginForm, AddState
+# from core.forms import SignUpForm, LoginForm, AddState
 from django.contrib import messages
 from core.models import State, Pollution
 from django.contrib.auth import authenticate, login, logout
@@ -46,7 +46,8 @@ def makePrediction(request):
                                "O3": [float(dict_data["O3"])], "Benzene": [float(dict_data["Benzene"])], "Toluene": [float(dict_data["Toluene"])], "Xylene": [float(dict_data["Xylene"])], "Aqi": [float(dict_data["Aqi"])]})
 
     final_output = gbc.predict(final_test)
-    data = {"Output": final_output[0], "Input": dict_data}
+    # data = {"Output": final_output[0], "Input": dict_data}
+    data={"Output":float(final_output[0])}
     return JsonResponse({"data": data})
     # nameSate = dict_data["stateinput"]
     # print(nameSate)
@@ -66,23 +67,24 @@ def makePrediction(request):
 
 
 # Home
-
-
 def home(request):
-    posts = State.objects.all()
-    pol = Pollution.objects.all()
-    city_names = ['Ahmedabad', 'Aizawl', 'Amaravati', 'Amritsar', 'Bengaluru', 'Bhopal',
-                  'Brajrajnagar', 'Chandigarh', 'Chennai', 'Coimbatore', 'Delhi', 'Ernakulam',
-                  'Gurugram', 'Guwahati', 'Hyderabad', 'Jaipur', 'Jorapokhar', 'Kochi', 'Kolkata',
-                  'Lucknow', 'Mumbai', 'Patna', 'Shillong', 'Talcher', 'Thiruvananthapuram',
-                  'Visakhapatnam']
+    if request.user.is_authenticated:
+        posts = State.objects.all()
+        pol = Pollution.objects.all()
+        city_names = ['Ahmedabad', 'Aizawl', 'Amaravati', 'Amritsar', 'Bengaluru', 'Bhopal',
+                    'Brajrajnagar', 'Chandigarh', 'Chennai', 'Coimbatore', 'Delhi', 'Ernakulam',
+                    'Gurugram', 'Guwahati', 'Hyderabad', 'Jaipur', 'Jorapokhar', 'Kochi', 'Kolkata',
+                    'Lucknow', 'Mumbai', 'Patna', 'Shillong', 'Talcher', 'Thiruvananthapuram',
+                    'Visakhapatnam']
 
-    context = {
-        'posts': posts,
-        "home": "current",
-        'city_names': city_names
-    }
-    return render(request, 'core/home.html', context)
+        context = {
+            'posts': posts,
+            "home": "current",
+            'city_names': city_names
+        }
+        return render(request, 'core/home.html', context)
+    else:
+        return redirect('/')
 
 
 # about
@@ -97,7 +99,7 @@ def contact(request):
 
 # dashboard
 def dashboard(request):
-    if request.user.is_authenticated:
+    # if request.user.is_authenticated:
         posts = State.objects.all()
         user = request.user
         gps = user.groups.all()
@@ -110,8 +112,8 @@ def dashboard(request):
 
         }
         return render(request, 'core/dashboard.html', context)
-    else:
-        return redirect("/login/")
+    # else:
+    #     return redirect("/login/")
 
 
 # LOGOUT
@@ -121,96 +123,120 @@ def user_logout(request):
 
 
 # Signup
-def user_signup(request):
-    if request.method == "POST":
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            messages.success(request, "Congratulations Your ID is Created")
-            user = form.save()
-            group = Group.objects.get(name='Author')
-            user.groups.add(group)
-    else:
-        form = SignUpForm()
 
-    context = {
-        'form': form,
-        "signup": "current"
-    }
-    return render(request, 'core/signup.html', context)
+# def user_signup(request):
+#     if request.method == "POST":
+#         form = SignUpForm(request.POST)
+#         if form.is_valid():
+#             messages.success(request, "Congratulations Your ID is Created")
+#             user = form.save()
+#             group = Group.objects.get(name='Author')
+#             user.groups.add(group)
+#     else:
+#         form = SignUpForm()
+
+#     context = {
+#         'signup': form,
+#         # "signup": "current"
+#     }
+#     return render(request, 'core/login_style.html', context)
 
 
-# Login
+# # Login
+# def user_login(request):
+#     print("**************login executed")
+#     # if not request.user.is_authenticated :: means user is not logged in so the else part will be executed
+#     if request.method == "POST":
+#         # form = LoginForm(request=request, data=request.POST)
+#         # if form.is_valid():
+#             uname = form.cleaned_data['username']
+#             upass = form.cleaned_data['password']
+#             user = authenticate(username=uname, password=upass)
+#             if user is not None:
+#                 login(request, user)
+#                 messages.success(request, "Logged in Successfuly")
+#                 return redirect("/home")
+            
+#     else:
+#         form = LoginForm()
+#     context = {
+#         'form': form,
+#         "login": "current"
+#     }
+#     return render(request, 'core/login_style.html', context)
+#     # else:
+#     #     # this will execute when the user is already logged in
+#     #     return render(request,'core/login.html')
 def user_login(request):
     # if not request.user.is_authenticated :: means user is not logged in so the else part will be executed
     if request.method == "POST":
-
-        form = LoginForm(request=request, data=request.POST)
-        if form.is_valid():
-            uname = form.cleaned_data['username']
-            upass = form.cleaned_data['password']
-            user = authenticate(username=uname, password=upass)
-            if user is not None:
-                login(request, user)
-                messages.success(request, "Logged in Successfuly")
-                return redirect("/home")
-    else:
-        form = LoginForm()
-    context = {
-        'form': form,
-        "login": "current"
-    }
-    return render(request, 'core/login.html', context)
-    # else:
-    #     # this will execute when the user is already logged in
-    #     return render(request,'core/login.html')
-
-
-# add new post
-def add_post(request):
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            form = AddState(request.POST, request.FILES)
-            if form.is_valid():
-                title = form.cleaned_data['title']
-                desc = form.cleaned_data['desc']
-                pic = form.cleaned_data['pic']
-                pst = State(title=title, desc=desc, pic=pic)
-                pst.save()
-                messages.success(request, "Post is Added Successfully")
-                form = AddState()
-
+        print("form is executed in post request")
+        username=request.POST.get('loginusername')
+        print(username)
+        password=request.POST.get('passwordinput')
+        print(password)
+        user=authenticate(username=username,password=password)
+        print(user)
+        if user is not None:
+            login(request,user)
+            messages.error(request,"You have logged in successfully")
+            return redirect('/home')
         else:
-            form = AddState()
-        img = State.objects.all()
-        context = {
-            'form': form,
-            'img': img
-        }
-        return render(request, 'core/addpost.html', context)
+            print("wrong credentials")
+            messages.error(request,"Invalid username or password")
+            return redirect('/')
     else:
-        return redirect('/login/')
+        print("it is executed in get request")
+        
+        return render(request,'core/login_style.html')
+
+# # add new post
+# def add_post(request):
+#     if request.user.is_authenticated:
+#         if request.method == "POST":
+#             form = AddState(request.POST, request.FILES)
+#             if form.is_valid():
+#                 title = form.cleaned_data['title']
+#                 desc = form.cleaned_data['desc']
+#                 pic = form.cleaned_data['pic']
+#                 pst = State(title=title, desc=desc, pic=pic)
+#                 pst.save()
+#                 messages.success(request, "Post is Added Successfully")
+#                 form = AddState()
+
+#         else:
+#             form = AddState()
+#         img = State.objects.all()
+#         context = {
+#             'form': form,
+#             'img': img
+#         }
+#         return render(request, 'core/addpost.html', context)
+#     else:
+#         return redirect('/login/')
 
 
 # update post
-def update_post(request, id):
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            pi = State.objects.get(pk=id)
-            form = AddState(request.POST, request.FILES, instance=pi)
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Post Updated Successfully")
 
-        else:
-            pi = State.objects.get(pk=id)
-            form = AddState(instance=pi)
-        context = {
-            'form': form,
-            "pi": pi
-        }
-        return render(request, 'core/updatepost.html', context)
-    else:
-        return redirect('/login/')
+# def update_post(request, id):
+#     if request.user.is_authenticated:
+#         if request.method == "POST":
+#             pi = State.objects.get(pk=id)
+#             form = AddState(request.POST, request.FILES, instance=pi)
+#             if form.is_valid():
+#                 form.save()
+#                 messages.success(request, "Post Updated Successfully")
+
+#         else:
+#             pi = State.objects.get(pk=id)
+#             form = AddState(instance=pi)
+#         context = {
+#             'form': form,
+#             "pi": pi
+#         }
+#         return render(request, 'core/updatepost.html', context)
+#     else:
+#         return redirect('/login/')
 
 
 # delete post
