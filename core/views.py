@@ -46,8 +46,10 @@ def makePrediction(request):
                                "O3": [float(dict_data["O3"])], "Benzene": [float(dict_data["Benzene"])], "Toluene": [float(dict_data["Toluene"])], "Xylene": [float(dict_data["Xylene"])], "Aqi": [float(dict_data["Aqi"])]})
 
     final_output = gbc.predict(final_test)
-    # data = {"Output": final_output[0], "Input": dict_data}
-    data={"Output":float(final_output[0])}
+    final_output = int(final_output[0])
+    result = {0:"Good",1:"Moderate",2:"Poor",3:"Satisfactor",4:"Severe", 5:"Very Poor"}
+    
+    data = {"Output": result[final_output]}
     return JsonResponse({"data": data})
     # nameSate = dict_data["stateinput"]
     # print(nameSate)
