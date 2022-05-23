@@ -6,6 +6,7 @@
     <script type="text/javascript" src="http://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous" defer>
     </script>
     <script type="text/javascript" src="{% static 'core/js/app.js' %}" defer></script>
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Sign In  & Sign Up</title>
     <link rel="stylesheet" href="{% static 'core/css/login.css' %}">
   </head>
@@ -21,14 +22,14 @@
 
             <div class ="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" name="loginusername">
+              <input type="text" placeholder="Username" name="loginusername" id="loginusername">
             </div>
 
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="password" placeholder="Password" name="passowrdinput">
+              <input type="password" placeholder="Password" name="passowrdinput" id="passwordinput">
             </div>
-            <input type="submit" value="Login" class="btn slid">
+            <input type="button" value="Login" class="btn slid" onclick="onSubmit()" />
 
             <p class="social-text">Or Sign in with social platforms</p>
             <div class="social-media">
@@ -53,18 +54,18 @@
             <h2 class="title">Sign up</h2>
             <div class ="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username">
+              <input type="text" placeholder="Username" id="sigupUsername">
             </div>
 
             <div class ="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="text" placeholder="Email">
+              <input type="text" placeholder="Email" id="sigupEmail">
             </div>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="password" placeholder="Password">
+              <input type="password" placeholder="Password" id="sigupPassword">
             </div>
-            <input type="submit" value="Sign up" class="btn slid">
+            <input type="button" value="Sign up" class="btn slid" onclick="onSignUp()">
             <p class="social-text">Or Sign up with social platforms</p>
             <div class="social-media">
               <a href="#" class="social-icon">
@@ -104,4 +105,45 @@
     </div>
   
   </body>
+  <script>
+    const onSubmit = ()=>{
+      const userName = document.getElementById("loginusername").value;
+      const password = document.getElementById("passwordinput").value;
+      $.ajax({
+            url : "", // the endpoint
+            type : "POST", // http method
+            data : { 'loginusername' : userName, 'passwordinput': password, 'csrfmiddlewaretoken': '{{csrf_token}}'}, // data sent with the post request
+    
+            // handle a successful response
+            success : function(json) {
+                console.log("successfull call:-",json);
+                if(json.data==="Yes"){
+                  location.href="/home";
+                }else{
+                  location.href = "/";
+                }
+                
+                
+            },
+        });
+    }
+    const onSignUp = ()=>{
+      const userN = document.getElementById("sigupUsername").value;
+      const signupEmail = document.getElementById("sigupEmail").value;
+      const signupPassword = document.getElementById("sigupPassword").value;
+       $.ajax({
+            url : "/signup", // the endpoint
+            type : "POST", // http method
+            data : { 'username' : userN, 'password': signupPassword, 'email':signupEmail, 'csrfmiddlewaretoken': '{{csrf_token}}'}, // data sent with the post request
+    
+            // handle a successful response
+            success : function(json) {
+                console.log("successfull call:-",json);
+                if(json.data==="Yes"){
+                  location.href="/lgoin";
+                }
+            },
+        });
+    }
+  </script>
 </html>

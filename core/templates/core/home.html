@@ -170,26 +170,7 @@ const fetchData = () =>{
             // handle a successful response
             success : function(json) {
                 console.log("successfull call:-",json);
-                //console.log(json); // log the returned json to the console
-                //console.log("success"); // another sanity check
-               /* data = [];
-                data.push(stateinput);
-                data.push(Number(jan_feb));
-                data.push(Number(mar_may));
-                data.push(Number(jun_sep));
-                data.push(Number(oct_dec));
-                data.push(json.data.final_output);
-                //console.log("data:-",data);
-                dataset.push(data);
-                if(grid==""){
-                    document.getElementById("resultHeading").style.display = "block";
-                    grid = table(dataset,["Region","Jan-Feb","Mar-May","Jun-Sep","Oct-Dec","Annual"],"wrapperOutputTable");
-                }
-                else{
-                    grid.updateConfig({
-                            data: dataset
-                        }).forceRender();
-                }*/
+                
                 
             },
         });

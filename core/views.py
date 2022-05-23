@@ -170,6 +170,7 @@ def user_logout(request):
 def user_login(request):
     # if not request.user.is_authenticated :: means user is not logged in so the else part will be executed
     if request.method == "POST":
+        print("er:-",request)
         print("form is executed in post request")
         username=request.POST.get('loginusername')
         print(username)
@@ -180,11 +181,11 @@ def user_login(request):
         if user is not None:
             login(request,user)
             messages.error(request,"You have logged in successfully")
-            return redirect('/home')
+            return JsonResponse({"data": "Yes"})
         else:
             print("wrong credentials")
             messages.error(request,"Invalid username or password")
-            return redirect('/')
+            return JsonResponse({"data": "No"})
     else:
         print("it is executed in get request")
         
