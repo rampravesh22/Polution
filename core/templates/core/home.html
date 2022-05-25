@@ -131,18 +131,49 @@
             <center><button class="btn btn-primary mt-5 m-auto" type="button" onClick="fetchData()">Submit</button></center>
         </form>
     </div>
+    <div class="row" id="resultRow" style="display: none;">
+        <h5 class="mt-4 text-center border border-warning text-dark py-3" id="resultHeading" style="width: 86%;left: 0px;right: 0px;margin-left: auto;margin-right: auto; background-color: white;">Result</h5>
+        <div style="width: 86%;text-align: center;left: 0px;right: 0px;margin-left: auto;margin-right: auto;">
+            <table class="table" id="myTable">
+            <thead>
+                <tr>
+                <th scope="col">S.no</th>
+                <th scope="col">City</th>
+                <th scope="col">PM2.5</th>
+                <th scope="col">PM10</th>
+                <th scope="col">NO</th>
+                <th scope="col">NO2</th>
+                <th scope="col">NOx</th>
+                <th scope="col">NH3</th>
+                <th scope="col">CO</th>
+                <th scope="col">SO2</th>
+                <th scope="col">O3</th>
+                <th scope="col">BENZENE</th>
+                <th scope="col">TOLUENE</th>
+                <th scope="col">XYLENE</th>
+                <th scope="col">AQI</th>
+                <th scope="col">AIR QUALITY</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
 
 </div>
 
 <script>
 cityName = "";
+cityList = {{city_names | safe}};
 const select = (num)=>{
-    cityList = {{city_names | safe}};
+    
     cityName = num;
     console.log("cityName:-",cityList[num]);
 }
 const fetchData = () =>{
-    debugger;
     const formData = document.getElementById('predictedData');
     if(cityName===""){
         alert("Please provide Area");
@@ -170,6 +201,25 @@ const fetchData = () =>{
     
             // handle a successful response
             success : function(json) {
+                document.getElementById("resultRow").style.display = "block";
+                var table = document.getElementById("myTable");
+                var row = table.insertRow(1);
+                var cell = [];
+                let inputValue = Object.values(data);
+                for (let i = 0; i < 16 ; i++) {
+                    cell[i] = row.insertCell(i);
+                    if(i===0){
+                        cell[i].innerHTML=i;    
+                    }else if(i===1){
+                        cell[i].innerHTML=cityList[inputValue[0]];
+                    }
+                    else if(i>14){
+                        cell[i].innerHTML = json.data.Output;
+                    }else{
+                        cell[i].innerHTML=inputValue[i-1];
+                    }
+                     
+                }
                 console.log("successfull call:-",json);
                 //console.log(json); // log the returned json to the console
                 //console.log("success"); // another sanity check
