@@ -7,6 +7,7 @@ from core.models import State, Pollution
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 import pandas as pd
+from django.contrib.auth.models import User
 from django.core import serializers
 from django.db.models import Avg, Count
 from django.http import JsonResponse
@@ -47,8 +48,9 @@ def makePrediction(request):
 
     final_output = gbc.predict(final_test)
     final_output = int(final_output[0])
-    result = {0:"Good",1:"Moderate",2:"Poor",3:"Satisfactor",4:"Severe", 5:"Very Poor"}
-    
+    result = {0: "Good", 1: "Moderate", 2: "Poor",
+              3: "Satisfactor", 4: "Severe", 5: "Very Poor"}
+
     data = {"Output": result[final_output]}
     return JsonResponse({"data": data})
     # nameSate = dict_data["stateinput"]
@@ -74,10 +76,10 @@ def home(request):
         posts = State.objects.all()
         pol = Pollution.objects.all()
         city_names = ['Ahmedabad', 'Aizawl', 'Amaravati', 'Amritsar', 'Bengaluru', 'Bhopal',
-                    'Brajrajnagar', 'Chandigarh', 'Chennai', 'Coimbatore', 'Delhi', 'Ernakulam',
-                    'Gurugram', 'Guwahati', 'Hyderabad', 'Jaipur', 'Jorapokhar', 'Kochi', 'Kolkata',
-                    'Lucknow', 'Mumbai', 'Patna', 'Shillong', 'Talcher', 'Thiruvananthapuram',
-                    'Visakhapatnam']
+                      'Brajrajnagar', 'Chandigarh', 'Chennai', 'Coimbatore', 'Delhi', 'Ernakulam',
+                      'Gurugram', 'Guwahati', 'Hyderabad', 'Jaipur', 'Jorapokhar', 'Kochi', 'Kolkata',
+                      'Lucknow', 'Mumbai', 'Patna', 'Shillong', 'Talcher', 'Thiruvananthapuram',
+                      'Visakhapatnam']
 
         context = {
             'posts': posts,
@@ -102,18 +104,18 @@ def contact(request):
 # dashboard
 def dashboard(request):
     # if request.user.is_authenticated:
-        posts = State.objects.all()
-        user = request.user
-        gps = user.groups.all()
-        full_name = user.get_full_name()
-        context = {
-            'posts': posts,
-            'fullname': full_name,
-            'groups': gps,
-            "dashboard": "current"
+    posts = State.objects.all()
+    user = request.user
+    gps = user.groups.all()
+    full_name = user.get_full_name()
+    context = {
+        'posts': posts,
+        'fullname': full_name,
+        'groups': gps,
+        "dashboard": "current"
 
-        }
-        return render(request, 'core/dashboard.html', context)
+    }
+    return render(request, 'core/dashboard.html', context)
     # else:
     #     return redirect("/login/")
 
@@ -125,7 +127,56 @@ def user_logout(request):
 
 
 # Signup
+# Signup
+def user_signup(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        pass1 = request.POST.get('password')
+        print(username,email,pass1)
+        # if pass1==pass2:
+        if User.objects.filter(username=username).exists():
+            messages.success(request, "This user is already taken")
 
+        else:
+            user = User(username=username, email=email, password=pass1)
+            user.save()
+            messages.success(
+                request, "Congratulation Your ID has been created !!")
+            return redirect('/')
+
+        # else:
+        #     messages.error(request,"Password did not matched !!")
+
+    context = {
+        "signup": "current"
+    }
+    return render(request, 'core/login_style.html', context)
+
+
+def user_login(request):
+    # if not request.user.is_authenticated :: means user is not logged in so the else part will be executed
+    if request.method == "POST":
+        print("er:-", request)
+        print("form is executed in post request")
+        username = request.POST.get('loginusername')
+        print(username)
+        password = request.POST.get('passwordinput')
+        print(password)
+        user = authenticate(username=username, password=password)
+        print(user)
+        if user is not None:
+            login(request, user)
+            messages.error(request, "You have logged in successfully")
+            return JsonResponse({"data": "Yes"})
+        else:
+            print("wrong credentials")
+            messages.error(request, "Invalid username or password")
+            return JsonResponse({"data": "No"})
+    else:
+        print("it is executed in get request")
+
+        return render(request, 'core/login_style.html')
 # def user_signup(request):
 #     if request.method == "POST":
 #         form = SignUpForm(request.POST)
@@ -158,7 +209,7 @@ def user_logout(request):
 #                 login(request, user)
 #                 messages.success(request, "Logged in Successfuly")
 #                 return redirect("/home")
-            
+
 #     else:
 #         form = LoginForm()
 #     context = {
@@ -169,29 +220,6 @@ def user_logout(request):
 #     # else:
 #     #     # this will execute when the user is already logged in
 #     #     return render(request,'core/login.html')
-def user_login(request):
-    # if not request.user.is_authenticated :: means user is not logged in so the else part will be executed
-    if request.method == "POST":
-        print("er:-",request)
-        print("form is executed in post request")
-        username=request.POST.get('loginusername')
-        print(username)
-        password=request.POST.get('passwordinput')
-        print(password)
-        user=authenticate(username=username,password=password)
-        print(user)
-        if user is not None:
-            login(request,user)
-            messages.error(request,"You have logged in successfully")
-            return JsonResponse({"data": "Yes"})
-        else:
-            print("wrong credentials")
-            messages.error(request,"Invalid username or password")
-            return JsonResponse({"data": "No"})
-    else:
-        print("it is executed in get request")
-        
-        return render(request,'core/login_style.html')
 
 # # add new post
 # def add_post(request):
