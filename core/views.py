@@ -130,52 +130,36 @@ def user_logout(request):
 # Signup
 def user_signup(request):
     if request.method == "POST":
-        username = request.POST.get('username')
+        usernm = request.POST.get('username')
+        if usernm=="":
+            return JsonResponse({"data":"empty"})
         email = request.POST.get('email')
         pass1 = request.POST.get('password')
-        print(username,email,pass1)
-        # if pass1==pass2:
-        if User.objects.filter(username=username).exists():
-            messages.success(request, "This user is already taken")
-
+        if User.objects.filter(username=usernm).exists():
+            return JsonResponse({"data":"No"})
         else:
-            user = User(username=username, email=email, password=pass1)
+            # user = User(username=username, email=email, password=pass1)
+            user=User.objects.create_user(username=usernm,email=email,password=pass1)
+            user.is_active=True
             user.save()
-            messages.success(
-                request, "Congratulation Your ID has been created !!")
-            return redirect('/')
-
-        # else:
-        #     messages.error(request,"Password did not matched !!")
-
-    context = {
-        "signup": "current"
-    }
-    return render(request, 'core/login_style.html', context)
+            return JsonResponse({"data":"Yes"})
+    return render(request, 'core/login_style.html')
 
 
 def user_login(request):
     # if not request.user.is_authenticated :: means user is not logged in so the else part will be executed
     if request.method == "POST":
-        print("er:-", request)
-        print("form is executed in post request")
-        username = request.POST.get('loginusername')
-        print(username)
-        password = request.POST.get('passwordinput')
-        print(password)
-        user = authenticate(username=username, password=password)
+        uname = request.POST['loginusername']
+        paasd = request.POST['passwordinput']
+        user = authenticate(username=uname, password=paasd)
         print(user)
         if user is not None:
             login(request, user)
-            messages.error(request, "You have logged in successfully")
             return JsonResponse({"data": "Yes"})
         else:
-            print("wrong credentials")
             messages.error(request, "Invalid username or password")
             return JsonResponse({"data": "No"})
     else:
-        print("it is executed in get request")
-
         return render(request, 'core/login_style.html')
 # def user_signup(request):
 #     if request.method == "POST":

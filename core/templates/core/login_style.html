@@ -24,7 +24,7 @@
 
 
       <div class="signin-signup">
-        <form action="{% url 'login' %}" class="sign-in-form" method="post">
+        <form action="" class="sign-in-form" method="post">
           {% csrf_token %}
           <h2 class="title">Sign in</h2>
 
@@ -37,7 +37,7 @@
             <i class="fas fa-user"></i>
             <input type="password" placeholder="Password" name="passowrdinput" id="passwordinput">
           </div>
-          <input type="button" value="Login" class="btn slid" onclick="onSubmit()" />
+          <input type="button" value="Login" class="btn btn-primary solid" onclick="onSubmit()" />
 
           <p class="social-text">Or Sign in with social platforms</p>
           <div class="social-media">
@@ -65,8 +65,15 @@
 
 
         <form action="" class="sign-up-form">
+          {% csrf_token %}
           <h2 class="title">Sign up</h2>
-          <div class="input-field">
+          <div class="alert alert-success alert-dismissible fade show d-none" role="alert" id="signup-success">
+            <strong>Congratulations!</strong> You have signup successfully.
+          </div>
+          <div class="alert alert-danger alert-dismissible fade show d-none" role="alert" id="signup-fail">
+            <strong>Sorry!</strong> useename is already exist !!.
+          </div>
+          <div class="input-field p">
             <i class="fas fa-user"></i>
             <input type="text" placeholder="Username" id="sigupUsername">
           </div>
@@ -79,7 +86,7 @@
             <i class="fas fa-user"></i>
             <input type="password" placeholder="Password" id="sigupPassword">
           </div>
-          <input type="button" value="Sign up" class="btn slid" onclick="onSignUp()">
+          <input type="button" value="Sign up" class="btn slid btn-outline-dark" onclick="onSignUp()">
           <p class="social-text">Or Sign up with social platforms</p>
           <div class="social-media">
             <a href="#" class="social-icon">
@@ -139,6 +146,7 @@
           location.href = "/home";
         } else {
           location.href = "/";
+          console.log("username and password did't match")
         }
 
 
@@ -157,13 +165,22 @@
         'password': signupPassword,
         'email': signupEmail,
         'csrfmiddlewaretoken': '{{csrf_token}}'
-      }, // data sent with the post request
+      },
 
-      // handle a successful response
       success: function (json) {
-        console.log("successfull call:-", json);
         if (json.data === "Yes") {
-          location.href = "/login";
+          const m = document.getElementById("signup-success");
+          m.classList.remove("d-none");
+          m.classList.add("d-block");
+        } else if (jason.data = "No") {
+          const m = document.getElementById("signup-fail");
+          m.classList.remove("d-none");
+          m.classList.add("d-block");
+        } else {
+          const m = document.getElementById("signup-empty");
+          m.classList.remove("d-none");
+          m.classList.add("d-block");
+
         }
       },
     });

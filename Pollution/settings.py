@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
+SESSION_COOKIE_SECURE = False
 INSTALLED_APPS = [
     "debug_toolbar",
     'django.contrib.admin',
@@ -134,3 +134,7 @@ MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
                 message_constants.SUCCESS: 'success',
                 message_constants.WARNING: 'warning',
                 message_constants.ERROR: 'danger',}
+
+AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
+    )

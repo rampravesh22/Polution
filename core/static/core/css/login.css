@@ -14,7 +14,11 @@
    background-color: #fff;
    overflow: hidden;
  }
-
+ @media (min-width: 768px){
+ .container, .container-md, .container-sm {
+     max-width: 100% !important;
+ }
+}
 .container:before{
   content: '';
   position: absolute;
